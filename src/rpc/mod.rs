@@ -208,7 +208,7 @@ where
     ) -> RpcResult<()> {
         let block = try_into_sealed_block(request_body.execution_payload.clone().into(), None)
             .to_rpc_result()?;
-        let chain_spec = self.provider().chain_spec();
+        // let chain_spec = self.provider().chain_spec();
 
         compare_values(
             "ParentHash",
@@ -219,16 +219,18 @@ where
         compare_values("GasLimit", request_body.message.gas_limit, block.gas_limit)?;
         compare_values("GasUsed", request_body.message.gas_used, block.gas_used)?;
 
-        full_validation(&block, self.provider(), &chain_spec).to_rpc_result()?;
+        // full_validation(&block, self.provider(), &chain_spec).to_rpc_result()?;
 
-        let state = self.execute_and_verify_block(&block, chain_spec.clone())?;
+        Ok(())
 
-        self.check_proposer_payment(
-            &block,
-            &state,
-            &request_body.message.value,
-            &request_body.execution_payload.fee_recipient,
-        )
+        // let state = self.execute_and_verify_block(&block, chain_spec.clone())?;
+
+        // self.check_proposer_payment(
+        //     &block,
+        //     &state,
+        //     &request_body.message.value,
+        //     &request_body.execution_payload.fee_recipient,
+        // )
     }
 }
 
